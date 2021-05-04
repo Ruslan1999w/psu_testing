@@ -1,0 +1,35 @@
+.matrix {
+  margin-top: 55px;
+  margin-bottom: 55px;
+  button {
+    height: 56px;
+    width: 140px;
+  }
+  .matrixContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    .row {
+      display: flex;
+      align-items: center;
+      .matrixElem  {
+        margin: 20px;
+        font-size: 18px;
+      }
+      .rowSum {
+        display: flex;
+        font-size: 18px;
+        h1 {
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 18px;
+          margin-right: 5px;
+          padding-left: 5px;
+          border-left:1px solid black ;
+        }
+      }
+    }
+  }
+}

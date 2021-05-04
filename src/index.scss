@@ -1,0 +1,24 @@
+* {
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .buttons {
+    display: flex;
+    align-items: center;
+
+    button {
+      height: 56px;
+      width: 140px;
+      padding: 0px;
+    }
+  }
+  .inputHeader {
+    font-family: Roboto, serif;
+    font-weight: 400;
+    font-size: 12px;
+    h1 {
+      color: rgba(#000000, 0.78);
+      margin: 50px 0;
+    }
+  }
+}

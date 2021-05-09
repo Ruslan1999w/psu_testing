@@ -60,18 +60,20 @@ export default function MatrixOutput ({...props}) {
     const { rows, columns, matrix, isRandomFilling } = props;
 
     const manualFilling = (array) => {
-        return (<div className="matrixContent">
-            {array.map( (row) => {
-                return(
-                    <div className='row'>
-                        {row.map((elem) => {
-                            return(<div className="matrixElem">{elem}</div>)
-                        })}
-                        {sumCount(row)}
-                    </div>
-                )
-            })}
-        </div>);
+        console.log('array', array);
+        return (
+            <div className="matrixContent">
+                {array.map( (row) => {
+                    return(
+                        <div className='row'>
+                            {row.map((elem) => {
+                                return(<div className="matrixElem">{elem}</div>)
+                            })}
+                            {sumCount(row)}
+                        </div>
+                    )
+                })}
+            </div>);
     }
     const randomFilling = (row, column) => {
         const randomMatrix = randMatrixCreator(row, column);

@@ -6,12 +6,14 @@ import ModalDialog from './modals/ModalDialog';
 import MatrixCreator from "./compontents/matrixCreator";
 import { actionChangeButtonVisibility } from './actions'
 import MatrixOutput from "./compontents/matrixOutput";
+import RandomFilling from "./compontents/randomFilling";
+import ManualFilling from "./compontents/manualFilling";
 import './index.scss';
 
 
 export default function Main() {
     const dispatch = useDispatch();
-    const [open, toggleDialog] = useState(true);
+    const [open, toggleDialog] = useState(false);
     const [inputType, toggleInputType] = useState('manual');
     const [matrixVisible, handleMatrixVisible] = useState(false);
     const buttonHidden = useSelector(state => state.buttonHidden);
@@ -32,73 +34,32 @@ export default function Main() {
         toggleInputType('random');
     };
 
-    const handleClick = () => {
-        handleMatrixVisible(true);
-    };
     return (
         <div>
-            <ModalDialog open={open}
-                         handleIn={(event) => manualFilling(event)}
-                         handleRand={(event) => randomFilling(event)}
-            />
+            {/*<ModalDialog open={open}*/}
+            {/*             handleIn={(event) => manualFilling(event)}*/}
+            {/*             handleRand={(event) => randomFilling(event)}*/}
+            {/*/>*/}
+            {/*<Button*/}
+            {/*    className="tryAgainButton"*/}
+            {/*    variant="contained"*/}
+            {/*    onClick={() => {*/}
+            {/*        document.location.reload();*/}
+            {/*        toggleDialog(true)*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    Попробовать снова*/}
+            {/*</Button>*/}
             {!open &&
                 <>
                 {inputType === 'manual' &&
-                    <>
-                        {!buttonHidden &&
-                        <div className="inputHeader">
-                            <h1>Введите количество строк и столбцов для формирования матрицы</h1>
-                            <div className='buttons'>
-                                <Input onSubmit={() => {
-                                    handleMatrixVisible(true);
-                                    dispatch(actionChangeButtonVisibility(true));
-                                    }}
-                                       changeMode={() => toggleDialog(true)}
-                                />
-                            </div>
-                            </div>
-                        }
-
-                        {matrixVisible &&
-                        <div className="matrix">
-                            <MatrixCreator />
-                        </div>
-                        }
-                    </>
-
+                    <ManualFilling modalWindow={toggleDialog}/>
                 }
                 {inputType === 'random' &&
-                    <>
-                    {!buttonHidden &&
-                    <div className="inputHeader">
-                        <h1>Введите количество строк и столбцов для формирования матрицы</h1>
-                        <div className='buttons'>
-                            <Input onSubmit={() => {
-                                handleMatrixVisible(true);
-                                dispatch(actionChangeButtonVisibility(true));
-                                }}
-                                   changeMode={() => toggleDialog(true)}
-                            />
-                        </div>
-                    </div>
-                    }
-                    {matrixVisible &&
-                    <MatrixOutput
-                        rows={rows}
-                        columns={columns}
-                        isRandomFilling
-                    />
-                    }
-                    </>
+                    <RandomFilling modalWindow={toggleDialog}/>
                 }
                 </>
             }
-            <Button
-                variant="contained"
-                onClick={(event) => {
-                    randomFilling(event);
-                }}
-            >Сменить тип ввода</Button>
         </div>
     );
 }

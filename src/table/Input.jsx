@@ -1,10 +1,8 @@
-// eslint-disable-next-line react/jsx-filename-extension
 import React, {useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import {useDispatch, useSelector} from "react-redux";
 import {actionChangeRow, actionChangeColumn} from '../actions';
 import Button from "@material-ui/core/Button";
-// import App from "../App";
 import './styles/index.scss';
 
 export default function Input({ onSubmit, changeMode }) {
@@ -19,9 +17,6 @@ export default function Input({ onSubmit, changeMode }) {
         row: false,
         column: false
     })
-    // console.log('datafilled', dataFilled);
-    // console.log('row', rowQuantity);
-    // console.log('col', columnQuantity)
 
     const rowQuantityHandler = (event) => {
         if ( event.target.value > 0 && event.target.value < 100) {

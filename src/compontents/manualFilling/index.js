@@ -4,11 +4,12 @@ import {actionChangeButtonVisibility} from "../../actions";
 import MatrixCreator from "../matrixCreator";
 import {useDispatch, useSelector} from "react-redux";
 import FileInput from "../inputFile/index";
-let result = '';
+import {matrixRender} from '../matrixOutput/index';
 
 export default function ManualFilling ({...props}) {
     const dispatch = useDispatch();
     const fileInputField = useRef(null);
+    const [outputVisible, handleMatrixOutputVisible] = useState(false);
     const [matrixVisible, handleMatrixVisible] = useState(false);
     const [selectedFile, setSelectedFile] = useState('');
     const buttonHidden = useSelector(state => state.buttonHidden);
@@ -28,7 +29,10 @@ export default function ManualFilling ({...props}) {
                         }}
                                changeMode={() => modalWindow(true)}
                         />
-                        <FileInput setFile={setSelectedFile}/>
+                        <FileInput
+                            setFile={setSelectedFile}
+                            matrixVisibility={handleMatrixOutputVisible}
+                        />
 
                     </div>
                 </div>
@@ -37,6 +41,11 @@ export default function ManualFilling ({...props}) {
             {matrixVisible &&
                 <div className="matrix">
                     <MatrixCreator />
+                </div>
+            }
+            {outputVisible &&
+                <div className="matrix">
+                    {matrixRender(selectedFile)}
                 </div>
             }
         </>

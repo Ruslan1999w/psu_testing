@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from "@material-ui/core/Button";
+import axios from "axios";
 import './index.scss';
 
 function shuffle(array) {
@@ -35,33 +37,27 @@ function randMatrixCreator(row, column) {
     return randMatrix;
 }
 const sumCount = (row) => {
-    const result = row.reduce((acc, rowElem) => acc + parseInt(rowElem), 0);
+    const result = row.reduce((acc, rowElem) => acc + (rowElem * 1), 0);
     return (<div className="rowSum">
         <h1>Сумма элементов строки:</h1>{result}
     </div>)
 };
-function matrixRender(array) {
-    return (<div className="matrixContent">
-        {array.map( (row) => {
-            return(
-                <div className='row'>
-                    {row.map((elem) => {
-                        return(<div className="matrixElem">{elem}</div>)
-                    })}
-                    {sumCount(row)}
-                </div>
-            )
-        })}
-    </div>)
-}
-
-
-export default function MatrixOutput ({...props}) {
-    const { rows, columns, matrix, isRandomFilling } = props;
-
-    const manualFilling = (array) => {
-        console.log('array', array);
-        return (
+const loadOutputFile = (array) => {
+    const rowSum = array.map(row => row.reduce((acc, rowElem) => acc + (rowElem * 1), 0))
+    axios.post('/', {
+        matrix: JSON.stringify(array),
+        rowSum: JSON.stringify(rowSum),
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+export function matrixRender(array) {
+    return (
+        <>
             <div className="matrixContent">
                 {array.map( (row) => {
                     return(
@@ -73,10 +69,35 @@ export default function MatrixOutput ({...props}) {
                         </div>
                     )
                 })}
-            </div>);
+            </div>
+            <div className="loadFile">
+                <a
+                    href="http://localhost:3000/get-file"
+                    download=""
+                >
+                <Button
+                    variant="contained"
+                    // onClick={() => loadOutputFile(array)}
+                >
+                    Скачать файл с результатами
+                </Button>
+                </a>
+            </div>
+        </>
+    )
+}
+
+
+export default function MatrixOutput ({...props}) {
+    const { rows, columns, matrix, isRandomFilling } = props;
+
+    const manualFilling = (array) => {
+        loadOutputFile(array);
+        return matrixRender(array);
     }
     const randomFilling = (row, column) => {
         const randomMatrix = randMatrixCreator(row, column);
+        loadOutputFile(randomMatrix);
         return(matrixRender(randomMatrix));
     };
 
@@ -94,3 +115,18 @@ export default function MatrixOutput ({...props}) {
 
     )
 };
+// return (
+//             <div className="matrixContent">
+//                 {array.map( (row) => {
+//                     return(
+//                         <div className='row'>
+//                             {row.map((elem) => {
+//                                 return(<div className="matrixElem">{elem}</div>)
+//                             })}
+//                             {sumCount(row)}
+//                         </div>
+//                     )
+//                 })}
+//
+//             </div>
+//         );

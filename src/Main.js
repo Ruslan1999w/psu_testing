@@ -13,7 +13,7 @@ import './index.scss';
 
 export default function Main() {
     const dispatch = useDispatch();
-    const [open, toggleDialog] = useState(false);
+    const [open, toggleDialog] = useState(true);
     const [inputType, toggleInputType] = useState('manual');
     const [matrixVisible, handleMatrixVisible] = useState(false);
     const buttonHidden = useSelector(state => state.buttonHidden);
@@ -36,20 +36,20 @@ export default function Main() {
 
     return (
         <div>
-            {/*<ModalDialog open={open}*/}
-            {/*             handleIn={(event) => manualFilling(event)}*/}
-            {/*             handleRand={(event) => randomFilling(event)}*/}
-            {/*/>*/}
-            {/*<Button*/}
-            {/*    className="tryAgainButton"*/}
-            {/*    variant="contained"*/}
-            {/*    onClick={() => {*/}
-            {/*        document.location.reload();*/}
-            {/*        toggleDialog(true)*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    Попробовать снова*/}
-            {/*</Button>*/}
+            <ModalDialog open={open}
+                         handleIn={(event) => manualFilling(event)}
+                         handleRand={(event) => randomFilling(event)}
+            />
+            <Button
+                className="tryAgainButton"
+                variant="contained"
+                onClick={() => {
+                    document.location.reload();
+                    toggleDialog(true)
+                }}
+            >
+                Попробовать снова
+            </Button>
             {!open &&
                 <>
                 {inputType === 'manual' &&
